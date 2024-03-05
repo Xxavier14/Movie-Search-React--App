@@ -1,16 +1,16 @@
 import { renderMovie, renderNoMovie } from './components/renderMovie'
-import { useState, useEffect, useRef , useCallback} from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import debounce from 'just-debounce-it'
 import './App.css'
 
-function useSearch () {
+function useSearch() {
   const [search, updateSearch] = useState('')
   const [error, setError] = useState(null)
   const isFristInput = useRef(true)
-  
+
 
   useEffect(() => {
-    if(isFristInput.current){
+    if (isFristInput.current) {
       isFristInput.current = search === ''
       return
     }
@@ -28,7 +28,7 @@ function useSearch () {
     setError(null)
   }, [search])
 
-  return ({search, updateSearch, error})
+  return ({ search, updateSearch, error })
 }
 
 let previousSearch = ''
@@ -37,38 +37,38 @@ function App() {
   const [responseMovie, setResponseMovie] = useState([])
   const movies = responseMovie.Search
   const hasMovie = movies?.length > 0
-  const {search, updateSearch, error} = useSearch()
+  const { search, updateSearch, error } = useSearch()
 
   const getMovie = (search) => {
     if (previousSearch === search) return
-    if(search){
-      fetch(`http://www.omdbapi.com/?apikey=e767709d&s=${search}`)
-      .then(res => res.json())
-      .then(data => {
-        setResponseMovie(data)
-        previousSearch = search
-      })
+    if (search) {
+      fetch(`https://www.omdbapi.com/?apikey=e767709d&s=${search}`)
+        .then(res => res.json())
+        .then(data => {
+          setResponseMovie(data)
+          previousSearch = search
+        })
     }
   }
 
   const debouncedGetMovies = useCallback(debounce(search => {
     getMovie(search)
   }, 300)
-  ,[] 
+    , []
   )
 
-  
+
 
   const handleChange = (search) => {
     const newSearch = search.target.value
     updateSearch(newSearch)
     debouncedGetMovies(newSearch)
   }
-  const handleSubmit = (event ) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
     getMovie(search)
   }
-  
+
   return (
     <div className='page'>
       <header>
