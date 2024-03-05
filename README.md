@@ -18,5 +18,3 @@ Evitar que se haga la misma búsqueda dos veces seguidas.
 Que la búsqueda se haga automáticamente al escribir.
 Evita que se haga la búsqueda continuamente al escribir (debounce)
 
-const APIKEY = 'e767709d'
-const API = `http://www.omdbapi.com/?apikey=${APIKEY}`
