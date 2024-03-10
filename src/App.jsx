@@ -42,7 +42,7 @@ function App() {
   const getMovie = (search) => {
     if (previousSearch === search) return
     if (search) {
-      fetch(`https://www.omdbapi.com/?apikey=e767709d&s=${search}`)
+      fetch(`https://www.omdbapi.com/?apikey=e767709d&s=${search}&type=movie`)
         .then(res => res.json())
         .then(data => {
           setResponseMovie(data)
